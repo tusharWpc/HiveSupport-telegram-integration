@@ -38,14 +38,15 @@ function sendMessageToTelegram($message) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $messageToSend = $_POST["message"];
-    // Send the message to Telegram
-    sendMessageToTelegram($messageToSend);
-    // Redirect back to the page after sending the message
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit();
-}
+    echo "Form submitted!<br>"; // Debug statement
 
+    $messageToSend = $_POST["message"];
+    echo "Message to send: $messageToSend<br>"; // Debug statement
+
+    // Send the message to Telegram
+    $response = sendMessageToTelegram($messageToSend);
+    var_dump($response); // Debug statement
+}
 // Fetch updates (messages) from the channel
 $response = apiRequest("getUpdates", ["chat_id" => $channel_id]);
 
@@ -61,20 +62,16 @@ if ($response["ok"]) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Telegram Messages</title>
 </head>
-
 <body>
     <h1>Telegram Messages</h1>
 
     <h2>Incoming and Outgoing Messages</h2>
     <ul>
-        <?php
-        foreach ($messages as $message) {
-            // Check if the keys exist before accessing them
+        <?php foreach ($messages as $message) {
             if (isset($message["message"]["text"]) && isset($message["message"]["from"]["first_name"])) {
                 $text = $message["message"]["text"];
                 $sender = $message["message"]["from"]["first_name"];
@@ -84,8 +81,7 @@ if ($response["ok"]) {
             } else {
                 echo "<li>Error: Unable to parse message.</li>";
             }
-        }
-        ?>
+        }?>
     </ul>
 
     <h2>Send Message to Telegram</h2>
@@ -95,5 +91,4 @@ if ($response["ok"]) {
         <input type="submit" value="Send Message">
     </form>
 </body>
-
 </html>
