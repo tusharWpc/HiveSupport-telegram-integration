@@ -1,7 +1,7 @@
 <?php
-$token = '6479866632:AAGPwWNRmHJF97Ww-U87tLUYoegUUi6oJxY';
+$token = '6373856429:AAFykbGuLvzcBR5IXehJdal2bSH4dW8NsVI';
 
-$channel_id = '6479866632';
+$channel_id = '6522269794';
  
 // Function to make API requests
 function apiRequest($method, $params = []) {
